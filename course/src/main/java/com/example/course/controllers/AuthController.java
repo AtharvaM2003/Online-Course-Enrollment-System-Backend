@@ -3,6 +3,7 @@ package com.example.course.controllers;
 import java.util.HashMap;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,6 +69,26 @@ public class AuthController {
 			throw new UserAlreadyExistsException("Username or Email Exists !");
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-		return ResponseEntity.status(HttpStatus.OK).body(userService.createUser(user));
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
 	}
+//	@PatchMapping("/users/{id}/password")
+//	public ResponseEntity<String> updatePassword(@PathVariable Long id, @RequestBody String pass) {
+//	   
+//
+//	    if (pass == null || pass.isBlank()) {
+//	        return ResponseEntity.badRequest().body("Password cannot be empty");
+//	    }
+//
+//	    Optional<User> optionalUser = userService.findUserById(id);
+//	    if (optionalUser.isEmpty()) {
+//	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+//	    }
+//
+//	    User user = optionalUser.get();
+//	    user.setPassword(passwordEncoder.encode(pass));
+//	    userService.updateUser(id, user);
+//
+//	    return ResponseEntity.ok("Password updated successfully");
+//	}
+
 }
